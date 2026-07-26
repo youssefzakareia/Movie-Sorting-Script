@@ -1,10 +1,31 @@
 #!/bin/bash
-extension=$1
-maindir=/media/user/ExternalDrive/Movies 
-moviedir=$maindir/*.$extension
-for i in $moviedir
+flag=$1
+maindir=
+if [[ -z "$maindir" || $flag == "-newDir" ]]
+then
+echo "Please specify Movie Directory"
+read maindir
+elif [[ $# -gt 0 ]]
+then
+echo "incorrect flag"
+exit
+fi 
+for i in "$maindir"/*
 do
-name="${i%.$extension*}"
+if [ -d "$i" ]
+then
+subliminal download -l en -s "$i"
+mkdir "$i/Extra Subs" 2> /dev/null
+subliminal download -l ar -s -d "$i/Extra Subs" "$i"
+continue
+fi 
+extension=.${i##*.}
+name="${i%$extension*}"
+if [[ $extension != .avi || $extension != .mp4 || $extension != .mkv || $extension != .srt ]]
+then
+echo "$i : $extension not eligible for sorting"
+continue
+fi
 name="${name##*/}"
 regex1="([0-9]{4}).*([0-9]{3,4}[p])"
 regex2="([0-9]{4})"
@@ -12,21 +33,27 @@ if [[ $name =~ $regex1 ]]
 then 
 year=${BASH_REMATCH[1]}
 quality=${BASH_REMATCH[2]}
-notname="${name%%$year*}"
-name="${notname//./ }"
+name="${name%%$year*}"
+name="${name//./ }"
 
-mkdir $maindir/"$name ($year) [$quality]"
-mv  "$i" $maindir/"$name ($year) [$quality]"
+
+mkdir "$maindir/$name ($year) [$quality]"
+if [[ $extension == .srt ]]
+then 
+mv "$i" "$maindir/$name ($year) [$quality]/$name ($year) [$quality].srt"
+else
+mv  "$i" "$maindir/$name ($year) [$quality]"
+fi
 elif [[ $name =~ $regex2  ]]
 then
 year=${BASH_REMATCH[1]}
 name="${name%%$year*}"
-name="${name//./ }" 
-mkdir $maindir/"$name ($year)"
-mv  "$i" $maindir/"$name ($year)"
+name="${name//./ }"
+mkdir "$maindir/$name ($year)"
+mv  "$i" "$maindir/$name ($year)"
 else
-mkdir $maindir/"$name"
-mv  "$i" $maindir/"$name"
+mkdir "$maindir/$name"
+mv  "$i" "$maindir/$name"
 fi
 done
-/usr/local/bin/fixshyt $maindir
+/usr/local/bin/fixshyt "$maindir"
