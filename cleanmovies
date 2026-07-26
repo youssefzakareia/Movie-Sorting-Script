@@ -10,9 +10,9 @@ then
 echo "incorrect flag"
 exit
 fi 
-mkdir "$i/Extra Subs" 2> /dev/null
 for i in "$maindir"/*
 do
+mkdir "$i/Extra Subs" 2> /dev/null
 if [[ -f "$i"/*.srt && -d "$i/Extra Subs" ]]
 then 
 continue
