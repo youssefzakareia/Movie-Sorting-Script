@@ -31,6 +31,7 @@ then
 subliminal download -l en -s "$i"
 subliminal download -l ar -s -d "$i/Extra Subs" "$i"
 continue
+fi
 regex1="([0-9]{4}).*([0-9]{3,4}[p])"
 regex2="([0-9]{4})"
 if [[ $name =~ $regex1 ]]
