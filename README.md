@@ -1,5 +1,5 @@
 # Movie-Sorting-Script
-This script attempts to add all movies in movies directory to properly named movie folder, i.e The Matrix (1999) [1080p].
+This script attempts to add all movies in movies directory to properly named movie folder, *(i.e The Matrix (1999) [1080p])*.
 ## Limitations:
   ### At this current moment it,
  - can only sort movies if they are dumped into one large movies folder, though it can include movie folders or movie videos undiscriminantly.
