@@ -10,16 +10,16 @@ then
 echo "incorrect flag"
 exit
 fi 
+mkdir "$i/Extra Subs" 2> /dev/null
 for i in "$maindir"/*
 do
-if [[ -f "$i/*.srt" && -d "$i/Extra Subs" ]]
+if [[ -f "$i"/*.srt && -d "$i/Extra Subs" ]]
 then 
 continue
 fi
 if [ -d "$i" ]
 then
 subliminal download -l en -s "$i"
-mkdir "$i/Extra Subs" 2> /dev/null
 subliminal download -l ar -s -d "$i/Extra Subs" "$i"
 continue
 fi 
