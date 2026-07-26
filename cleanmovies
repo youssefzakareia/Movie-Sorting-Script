@@ -1,0 +1,32 @@
+#!/bin/bash
+extension=$1
+maindir=/media/user/ExternalDrive/Movies 
+moviedir=$maindir/*.$extension
+for i in $moviedir
+do
+name="${i%.$extension*}"
+name="${name##*/}"
+regex1="([0-9]{4}).*([0-9]{3,4}[p])"
+regex2="([0-9]{4})"
+if [[ $name =~ $regex1 ]]
+then 
+year=${BASH_REMATCH[1]}
+quality=${BASH_REMATCH[2]}
+notname="${name%%$year*}"
+name="${notname//./ }"
+
+mkdir $maindir/"$name ($year) [$quality]"
+mv  "$i" $maindir/"$name ($year) [$quality]"
+elif [[ $name =~ $regex2  ]]
+then
+year=${BASH_REMATCH[1]}
+name="${name%%$year*}"
+name="${name//./ }" 
+mkdir $maindir/"$name ($year)"
+mv  "$i" $maindir/"$name ($year)"
+else
+mkdir $maindir/"$name"
+mv  "$i" $maindir/"$name"
+fi
+done
+/usr/local/bin/fixshyt $maindir
