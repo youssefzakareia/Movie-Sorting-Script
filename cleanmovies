@@ -12,6 +12,10 @@ exit
 fi 
 for i in "$maindir"/*
 do
+if [[ -f "$i/*.srt" && -d "$i/Extra Subs" ]]
+then 
+continue
+fi
 if [ -d "$i" ]
 then
 subliminal download -l en -s "$i"
@@ -40,7 +44,7 @@ name="${name//./ }"
 mkdir "$maindir/$name ($year) [$quality]"
 if [[ $extension == .srt ]]
 then 
-mv "$i" "$maindir/$name ($year) [$quality]/$name ($year) [$quality].srt"
+mv "$i" "$maindir/$name ($year) [$quality]/Extra Subs/$name ($year) [$quality].srt"
 else
 mv  "$i" "$maindir/$name ($year) [$quality]"
 fi
