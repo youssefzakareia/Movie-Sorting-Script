@@ -14,13 +14,13 @@ for i in "$maindir"/*
 do
 extension=.${i##*.}
 name="${i%$extension*}"
-if [[ $extension != .avi || $extension != .mp4 || $extension != .mkv || $extension != .srt ]]
+if [[ $extension != .avi && $extension != .mp4 && $extension != .mkv && $extension != .srt ]]
 then
 echo "$i : $extension not eligible for sorting"
 continue
 fi
 name="${name##*/}"
-peakname=name
+peakname=$name
 mkdir "$i/Extra Subs" 2> /dev/null
 if [[ -f "$i"/$peakname.srt && -d "$i/Extra Subs" ]]
 then 
