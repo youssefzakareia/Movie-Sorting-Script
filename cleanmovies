@@ -12,17 +12,6 @@ exit
 fi 
 for i in "$maindir"/*
 do
-mkdir "$i/Extra Subs" 2> /dev/null
-if [[ -f "$i"/*.srt && -d "$i/Extra Subs" ]]
-then 
-continue
-fi
-if [ -d "$i" ]
-then
-subliminal download -l en -s "$i"
-subliminal download -l ar -s -d "$i/Extra Subs" "$i"
-continue
-fi 
 extension=.${i##*.}
 name="${i%$extension*}"
 if [[ $extension != .avi || $extension != .mp4 || $extension != .mkv || $extension != .srt ]]
@@ -31,6 +20,17 @@ echo "$i : $extension not eligible for sorting"
 continue
 fi
 name="${name##*/}"
+peakname=name
+mkdir "$i/Extra Subs" 2> /dev/null
+if [[ -f "$i"/$peakname.srt && -d "$i/Extra Subs" ]]
+then 
+continue
+fi
+if [ -d "$i" ]
+then
+subliminal download -l en -s "$i"
+subliminal download -l ar -s -d "$i/Extra Subs" "$i"
+continue
 regex1="([0-9]{4}).*([0-9]{3,4}[p])"
 regex2="([0-9]{4})"
 if [[ $name =~ $regex1 ]]
