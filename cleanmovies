@@ -21,13 +21,14 @@ continue
 fi
 name="${name##*/}"
 peakname=$name
-mkdir "$i/Extra Subs" 2> /dev/null
-if [[ -f "$i"/$peakname.srt && -d "$i/Extra Subs" ]]
-then 
-continue
-fi
 if [ -d "$i" ]
 then
+if [[ -d $i/"Extra Subs" ]]
+then
+continue
+else
+mkdir $i/"Extra Subs"
+fi
 subliminal download -l en -s "$i"
 subliminal download -l ar -s -d "$i/Extra Subs" "$i"
 continue
