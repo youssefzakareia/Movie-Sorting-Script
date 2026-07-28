@@ -12,6 +12,8 @@ exit
 fi 
 for i in "$maindir"/*
 do
+if [[ -f $i ]]
+then
 extension=.${i##*.}
 name="${i%$extension*}"
 if [[ $extension != .avi && $extension != .mp4 && $extension != .mkv && $extension != .srt ]]
@@ -20,7 +22,7 @@ echo "$i : $extension not eligible for sorting"
 continue
 fi
 name="${name##*/}"
-peakname=$name
+fi
 if [ -d "$i" ]
 then
 if [[ -d $i/"Extra Subs" ]]
